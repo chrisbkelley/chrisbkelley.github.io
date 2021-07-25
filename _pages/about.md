@@ -5,6 +5,6 @@ header:
   image: "/images/zakim.jpg"
 ---
 
-I am fascinated by the insights that are waiting to be discovered in large datasets and passionate about data science.   
+I am a data enthusiast who is fascinated by the insights waiting to be discovered in large datasets.   
 
 
