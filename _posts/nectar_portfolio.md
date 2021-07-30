@@ -1,3 +1,13 @@
+---
+title: "Data wrangling & EDA - North American nectar sources"
+date: 2021-07-29
+tags: [data wrangling, data science, messy data]
+header:
+  image: "/images/perceptron/percept.jpg"
+excerpt: "Data Wrangling, Data Science, Messy Data"
+mathjax: "false"
+---
+
 # __North American nectar sources of honey bees: <br> A data wrangling & EDA project__
 
 ### Honey bees play a vital role in North American agriculture, many of the fruits and vegetables in our grocery stores are a direct result of the efforts of these industrious pollinators.  Their honey is also an important part of the economy, in 2019 honey bees in the United States produced 157 million lbs of honey worth an estimated value of over \$339 million¹.   An interesting subset of the honey market is monofloral honey; this is honey that is produced primarily from the nectar of one type of plant.  Monofloral honey is difficult/costly to produce and it sold at premium price in the marketplace. Wikipedia has an article with two lists of North American nectar sources for honey bees.  This project copies the data from wikipedia and produces one cleaned/wrangled dataset.   An exploratory data analysis (EDA) of the dataset is provided and an emphasis on patterns involving monofloral honey 
