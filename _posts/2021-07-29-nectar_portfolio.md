@@ -193,13 +193,13 @@ df_raw_2.head(3)
 
 
 
-__There are a few issues that stand out:__
-    - The column headers do not use identical naming conventions.  
-    - The column headers are strings with spaces between the words.
-    - The second table has 9 columns than while the first table has 8 columns.
-    - The nonscientific/common name column has numbers encapsulated in brackets.  This is an artifact from links to citations in the wikipedia article.
-    - The common names also have more than one name in a comma separated format which may not be visually appealing in plots.
-    - The final column in each table is used to indicated if a nectar source is major or minor.  Some of the entries have additional text that will need to be removed. 
+__There are a few issues that stand out:__<br>
+    - The column headers do not use identical naming conventions.<br> 
+    - The column headers are strings with spaces between the words.<br>
+    - The second table has 9 columns than while the first table has 8 columns.<br>
+    - The nonscientific/common name column has numbers encapsulated in brackets.  This is an artifact from links to citations in the wikipedia article.<br>
+    - The common names also have more than one name in a comma separated format which may not be visually appealing in plots.<br>
+    - The final column in each table is used to indicated if a nectar source is major or minor.  Some of the entries have additional text that will need to be removed.<br> 
 __The first order of business is to restructure the two tables and combine them into a dataframe.__
 
 
@@ -615,7 +615,7 @@ df.nunique()
 
 
 
-__It took a bit of research to fill in the null values and a bit of regex magic to clear up the data inconsistencies. Now the next stage in the process may begin.__
+It took a bit of research to fill in the null values and a bit of regex magic to clear up the data inconsistencies. Now the next stage in the process may begin.
 # __Exploratory Data Analysis__
 
 
@@ -643,7 +643,7 @@ df.info()
     memory usage: 8.4+ KB
 
 
-__There are 7 qualitative features in this dataset and 2 quantitative features. The quantitative features are ordinal variables that represent the start/stop months of each plant's blooming cycle.  The qualitative features are nominal variables; common_name and scientific_name both have a unique entry for each row while the other variables have 2-4 possible values.__
+There are 7 qualitative features in this dataset and 2 quantitative features. The quantitative features are ordinal variables that represent the start/stop months of each plant's blooming cycle.  The qualitative features are nominal variables; common_name and scientific_name both have a unique entry for each row while the other variables have 2-4 possible values.
 
 
 ```python
@@ -761,7 +761,7 @@ for i in num_vars:
     
 
 
-__Univariate analysis - quantitative features__
+__Univariate analysis - quantitative features__<br>
 The begin_bloom_month feature has a median month of June and it is a unimodal normal distribution with a fairly compact IQR spanning from May-July.  The end_bloom_month feature has a median month of August. It is a bimodal with peaks in late Spring and September; the distribution's IQR covers May-September.  Outliers are not present in either distribution.  It is also worth noting that some of the end_bloom_month values occur in early spring.  This could be a data entry error and should be researched further.    
 
 
@@ -801,7 +801,7 @@ for i in cat_vars:
     
 
 
-__Univariate analysis - qualitative features__
+__Univariate analysis - qualitative features__<br>
 The bar charts of each categorical feature give a better sense of the distribution of each response.  It is interesting to note that each feature has one response that accounts for 50% or more of all responses.   The boxplots indicate that there are outliers in the plant_type feature.  The spread of both the plant_type and life_cycle features are unusual as well.  This is probably due to the skewness towards one response affecting the mean.  
 
 
@@ -861,7 +861,7 @@ for x in cat_vars:
 
 
 __By segmenting pairs of categorical features, a few interesting observations were made:__
-* Perennial flowers and trees account for roughly 75% of the nectar producing plants.  <br> * Most monofloral honey is derived from the nectar of perennial plants. <br> * Crop plants are the leading source of monofloral honey, accounting for nearly 50% total sources.
+* Perennial flowers and trees account for roughly 75% of the nectar producing plants.  * Most monofloral honey is derived from the nectar of perennial plants. <* Crop plants are the leading source of monofloral honey, accounting for nearly 50% total sources.
 
 *Curiously noted that around half of the crop plants were identified as wild.  These plants may need to be classified as feral or there may be underlying data integrity issues from wikipedia's article.*
 
