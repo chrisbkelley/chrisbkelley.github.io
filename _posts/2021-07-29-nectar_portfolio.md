@@ -10,14 +10,16 @@ mathjax: "false"
 
 # __North American nectar sources of honey bees: <br> A data wrangling & EDA project__
 
-### Honey bees play a vital role in North American agriculture, many of the fruits and vegetables in our grocery stores are a direct result of the efforts of these industrious pollinators.  Their honey is also an important part of the economy, in 2019 honey bees in the United States produced 157 million lbs of honey worth an estimated value of over \$339 million¹.   An interesting subset of the honey market is monofloral honey; this is honey that is produced primarily from the nectar of one type of plant.  Monofloral honey is difficult/costly to produce and it sold at premium price in the marketplace. Wikipedia has an article with two lists of North American nectar sources for honey bees.  This project copies the data from wikipedia and produces one cleaned/wrangled dataset.   An exploratory data analysis (EDA) of the dataset is provided and an emphasis on patterns involving monofloral honey 
+Honey bees play a vital role in North American agriculture, many of the fruits and vegetables in our grocery stores are a direct result of the efforts of these industrious pollinators.  Their honey is also an important part of the economy, in 2019 honey bees in the United States produced 157 million lbs of honey worth an estimated value of over \$339 million¹.   An interesting subset of the honey market is monofloral honey; this is honey that is produced primarily from the nectar of one type of plant.  Monofloral honey is difficult/costly to produce and it sold at premium price in the marketplace. Wikipedia has an article with two lists of North American nectar sources for honey bees.  This project copies the data from wikipedia and produces one cleaned/wrangled dataset.   An exploratory data analysis (EDA) of the dataset is provided and an emphasis on patterns involving monofloral honey 
 
-#### The data for the project originated from a wikipedia article on __[North American nectar sources for honey bees](https://en.wikipedia.org/wiki/List_of_Northern_American_nectar_sources_for_honey_bees)__.  Two table from the article were extracted and required wrangling to create a dataset that would lend itself to a more in depth analysis with python.
+The data for the project originated from a wikipedia article on __[North American nectar sources for honey bees](https://en.wikipedia.org/wiki/List_of_Northern_American_nectar_sources_for_honey_bees)__.  Two table from the article were extracted and required wrangling to create a dataset that would lend itself to a more in depth analysis with python.
 
-[1] Center for Veterinary Medicine. “Helping Agriculture’s Helpful Honey Bees.” U.S. Food and Drug Administration, 2019, www.fda.gov/animal-veterinary/animal-health-literacy/helping-agricultures-helpful-honey-bees.
+
+
+¹Center for Veterinary Medicine. “Helping Agriculture’s Helpful Honey Bees.” U.S. Food and Drug Administration, 2019, www.fda.gov/animal-veterinary/animal-health-literacy/helping-agricultures-helpful-honey-bees.
 
 ***
-### Import the libraries to extract the tables and load into pandas
+__Import the libraries to extract the tables and load into pandas.__
 
 
 ```python
@@ -34,8 +36,8 @@ df_raw_1 = pd.read_html(str(table))[0]
 df_raw_2 = pd.read_html(str(table))[1]
 ```
 
-## __Data cleaning/wrangling__
-#### The first 3 lines of each table:
+# __Data cleaning/wrangling__
+__The first 3 lines of each table:__
 
 
 ```python
@@ -193,14 +195,14 @@ df_raw_2.head(3)
 
 
 
-### There are a few issues that stand out:
+__There are a few issues that stand out:__
     - The column headers do not use identical naming conventions.  
     - The column headers are strings with spaces between the words.
     - The second table has 9 columns than while the first table has 8 columns.
     - The nonscientific/common name column has numbers encapsulated in brackets.  This is an artifact from links to citations in the wikipedia article.
     - The common names also have more than one name in a comma separated format which may not be visually appealing in plots.
     - The final column in each table is used to indicated if a nectar source is major or minor.  Some of the entries have additional text that will need to be removed. 
-### The first order of business is to restructure the two tables and combine them into a dataframe.
+__The first order of business is to restructure the two tables and combine them into a dataframe.__
 
 
 ```python
@@ -230,7 +232,7 @@ df.rename(columns={'nonscientific_name':'common_name'},
          inplace=True)
 ```
 
-### Now that the data has been consolidated, are there any missing or inconsistent values?   
+__Now that the data has been consolidated, are there any missing or inconsistent values?__  
 
 
 ```python
@@ -255,7 +257,7 @@ df.info()
     memory usage: 7.8+ KB
 
 
-### There are 109 rows, however, several of the features have less than 109 rows.  This indicates the presence of null values.
+__There are 109 rows, however, several of the features have less than 109 rows.  This indicates the presence of null values.__
 
 
 ```python
@@ -281,10 +283,9 @@ df.isnull().sum()
     dtype: int64
 
 
+__The information for the missing values will need to be researched and manually added.__
 
-### The information for the missing values will need to be researched manually added.
-
-### A detailed breakdown of the categorical feature values.
+__A detailed breakdown of the categorical feature values.__
 
 
 ```python
@@ -329,7 +330,7 @@ df['plant_type'].value_counts().plot.barh()
     
 
 
-### The feature values are single characters, this is confusing without a legend to reference.  Replacing the characters with the words they represent will add clarity.  Also, the comma separated values will need to be researched to determine if the values warrant their own category. 
+__The feature values are single characters, this is confusing without a legend to reference.  Replacing the characters with the words they represent will add clarity.  Also, the comma separated values will need to be researched to determine if the values warrant their own category.__
 
 
 ```python
@@ -348,8 +349,7 @@ df['life_cycle'].value_counts().plot.barh()
 ![png](output_17_1.png)
     
 
-
-### There are 4 different values for perennial, these all need to be consolidated into one value named perennial.
+__There are 4 different values for perennial, these all need to be consolidated into one value named perennial.__
 
 
 ```python
@@ -461,7 +461,7 @@ df['source'].value_counts()
 
 
 
-### These 3 features have several rows with lengthy descriptive wording that needs to be removed.  The availability feature essentially has 3 categorical responses; feral, cultivated and ornamental.  The distinction between cultivated and ornamental is not important for this project; plants in both environments are managed completely by humans.  Research of the responses identified as feral indicated that the provided labels were misleading, there were both native wild and feral species in the listing.  In the context of this study, the environment of the plant's habitat (wild) seemed like a better descriptor.
+These 3 features contain several rows with lengthy descriptive wording that needs to be removed.  The availability feature essentially has 3 categorical responses; feral, cultivated and ornamental.  The distinction between cultivated and ornamental is not important for this project; plants in both environments are managed completely by humans.  Research of the responses identified as feral indicated that the provided labels were misleading, there were both native wild and feral species in the listing.  In the context of this study, the environment of the plant's habitat (wild) seemed like a better descriptor.
 
 
 ```python
@@ -614,7 +614,7 @@ df.nunique()
 
 
 
-### It took a bit of research to fill in the null values and a bit of regex magic to clear up the data inconsistencies. Now the next stage in the process may begin.
+__It took a bit of research to fill in the null values and a bit of regex magic to clear up the data inconsistencies. Now the next stage in the process may begin.__
 # __Exploratory Data Analysis__
 
 
@@ -642,7 +642,7 @@ df.info()
     memory usage: 8.4+ KB
 
 
-### There are 7 qualitative features in this dataset and 2 quantitative features. The quantitative features are ordinal variables that represent the start/stop months of each plant's blooming cycle.  The qualitative features are nominal variables; common_name and scientific_name both have a unique entry for each row while the other variables have 2-4 possible values.
+__There are 7 qualitative features in this dataset and 2 quantitative features. The quantitative features are ordinal variables that represent the start/stop months of each plant's blooming cycle.  The qualitative features are nominal variables; common_name and scientific_name both have a unique entry for each row while the other variables have 2-4 possible values.__
 
 
 ```python
@@ -760,8 +760,8 @@ for i in num_vars:
     
 
 
-## Univariate analysis - quantitative features
-### The begin_bloom_month feature has a median month of June and it is a unimodal normal distribution with a fairly compact IQR spanning from May-July.  The end_bloom_month feature has a median month of August. It is a bimodal with peaks in late Spring and September; the distribution's IQR covers May-September.  Outliers are not present in either distribution.  It is also worth noting that some of the end_bloom_month values occur in early spring.  This could be a data entry error and should be researched further.    
+__Univariate analysis - quantitative features__
+The begin_bloom_month feature has a median month of June and it is a unimodal normal distribution with a fairly compact IQR spanning from May-July.  The end_bloom_month feature has a median month of August. It is a bimodal with peaks in late Spring and September; the distribution's IQR covers May-September.  Outliers are not present in either distribution.  It is also worth noting that some of the end_bloom_month values occur in early spring.  This could be a data entry error and should be researched further.    
 
 
 ```python
@@ -800,8 +800,8 @@ for i in cat_vars:
     
 
 
-## Univariate analysis - qualitative features
-### The bar charts of each categorical feature give a better sense of the distribution of each response.  It is interesting to note that each feature has one response that accounts for 50% or more of all responses.   The boxplots indicate that there are outliers in the plant_type feature.  The spread of both the plant_type and life_cycle features are unusual as well.  This is probably due to the skewness towards one response affecting the mean.  
+__Univariate analysis - qualitative features__
+The bar charts of each categorical feature give a better sense of the distribution of each response.  It is interesting to note that each feature has one response that accounts for 50% or more of all responses.   The boxplots indicate that there are outliers in the plant_type feature.  The spread of both the plant_type and life_cycle features are unusual as well.  This is probably due to the skewness towards one response affecting the mean.  
 
 
 ```python
@@ -858,8 +858,8 @@ for x in cat_vars:
     
 
 
-### By segmenting pairs of categorical features, a few interesting observations were made:
-#### * Perennial flowers and trees account for roughly 75% of the nectar producing plants.  <br> * Most monofloral honey is derived from the nectar of perennial plants. <br> * Crop plants are the leading source of monofloral honey, accounting for nearly 50% total sources.
+__By segmenting pairs of categorical features, a few interesting observations were made:__
+* Perennial flowers and trees account for roughly 75% of the nectar producing plants.  <br> * Most monofloral honey is derived from the nectar of perennial plants. <br> * Crop plants are the leading source of monofloral honey, accounting for nearly 50% total sources.
 
 *Curiously noted that around half of the crop plants were identified as wild.  These plants may need to be classified as feral or there may be underlying data integrity issues from wikipedia's article.*
 
@@ -897,8 +897,8 @@ sns.stripplot(data=df_mono,
     
 
 
-### This plot illustrates the relationship between begin and end bloom months of each species of plant used for monofloral honey.  There are a few interesting observations worth noting:
-#### - There are plants that start to bloom in April and end in September, providing a 5 month window of opportunity.<br>- There are clusters of plants that have similar start/end times.  This could prove useful for planning hive relocation strategies during the season and selecting crops to cultivate.<br>- There are also clusters of plants that bloom for 1 month.  These plants should be researched further, it may be a biological fact that the plants have a short bloom cycle but it is also possible that the data was incorrectly entered into wikipedia.*
+This plot illustrates the relationship between begin and end bloom months of each species of plant used for monofloral honey.  There are a few interesting observations worth noting:
+There are plants that start to bloom in April and end in September, providing a 5 month window of opportunity.<br>- There are clusters of plants that have similar start/end times.  This could prove useful for planning hive relocation strategies during the season and selecting crops to cultivate.<br>- There are also clusters of plants that bloom for 1 month.  These plants should be researched further, it may be a biological fact that the plants have a short bloom cycle but it is also possible that the data was incorrectly entered into wikipedia.*
 
 
 ```python
@@ -952,8 +952,8 @@ ax2.set(ylabel='Consecutive months')
     
 
 
-### The bar charts breakdown the plant type for each monofloral honey nectar source.  Observations of interest:  
-#### - Most of the plants begin blooming in May/June and end in Aug/Sep.<br>- Crops have a peak bloom cycle of 3 months, while shrubs and trees peak in 1 month. 
+__The bar charts breakdown the plant type for each monofloral honey nectar source.  Observations of interest:__  
+- Most of the plants begin blooming in May/June and end in Aug/Sep.<br>- Crops have a peak bloom cycle of 3 months, while shrubs and trees peak in 1 month. 
 
 
 ```python
@@ -1325,7 +1325,7 @@ df_mono.sort_values(by=['begin_bloom_month','end_bloom_month', 'common_name'])
 
 
 
-#### A column of bloom cycle intervals was added to the dataset, let's have visualize this feature's and take a look a its descriptive statistics. 
+__A column of bloom cycle intervals was added to the dataset, let's have visualize this feature's and take a look a its descriptive statistics.__
 
 
 ```python
@@ -1394,7 +1394,7 @@ df['bloom_delta'].describe()
 
 
 
-#### The values are arranged in a bimodal distribution with a median of one month and a second peak for 3 month intervals.  Outliers are not present. The IQR is from ranges from 1 to 3 month intervals.  It is also worth noting that the first and second quartile have identical values.
+__The values are arranged in a bimodal distribution with a median of one month and a second peak for 3 month intervals.  Outliers are not present. The IQR is from ranges from 1 to 3 month intervals.  It is also worth noting that the first and second quartile have identical values.__
 
 
 ```python
@@ -1417,6 +1417,6 @@ df_mono['bloom_delta'].value_counts()
 
 
 # Conclusion and recommended future projects
-### This was an entertaining dataset to explore however, limitations encountered during this project were significant.  This data should not be used for statistical modeling or to make business decisions.  Data integrity issues were noted several times during the course of the project; data entry errors were discovered frequently.  The dataset consisted of a low number of observations and features.  According to the Flora of North America Association there are over 20,000 species of plants on the continent; this dataset lists 208 species.  Some of features were ambiguous and the dataset lacked quantitative measurements of any kind. 
+This was an entertaining dataset to explore however, limitations encountered during this project were significant.  This data should not be used for statistical modeling or to make business decisions.  Data integrity issues were noted several times during the course of the project; data entry errors were discovered frequently.  The dataset consisted of a low number of observations and features.  According to the Flora of North America Association there are over 20,000 species of plants on the continent; this dataset lists 208 species.  Some of features were ambiguous and the dataset lacked quantitative measurements of any kind. 
 
-### For a recommended future project, one should utilize credible data sources from trustworthy institutions and compile a dataset that is rich in both quantitative and qualitative features.  It would be interesting to examine a similar dataset that included more features such as each species' geographic region, additional plant characteristics, bee species, honey production quantities and so on.   
+For a recommended future project, one should utilize credible data sources from trustworthy institutions and compile a dataset that is rich in both quantitative and qualitative features.  It would be interesting to examine a similar dataset that included more features such as each species' geographic region, additional plant characteristics, bee species, honey production quantities and so on.   
