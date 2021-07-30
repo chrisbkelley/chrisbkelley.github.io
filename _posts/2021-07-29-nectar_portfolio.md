@@ -208,13 +208,16 @@ __The first order of business is to restructure the two tables and combine them 
 ```python
 df = df_raw_1.copy()
 
-# The first table is missing this column. Further research revealed that all of the plants are perennials.
+# The first table is missing this column. Further research 
+# revealed that all of the plants are perennials.
 df['life_cycle'] = 'perennial'
 
-# The new life_cycle col needs to be in the 4th position before the 2nd table is appended. 
+# The new life_cycle col needs to be in the 
+# 4th position before the 2nd table is appended. 
 df = df[df.columns[[0,1,2,8,3,4,5,6,7]]]
 
-# Replace spaces in column names with underscores and converted to lowercase
+# Replace spaces in column names with 
+# underscores and converted to lowercase
 df_cols = list(df.columns)
 df_cols = [x.lower() for x in df_cols]
 converter = lambda x: x.replace(' ', '_')
@@ -224,7 +227,8 @@ df_cols = list(map(converter,df_cols))
 df_cols.pop(-1)
 df_cols.append('source')
 
-# Changed name of column to make it less confusing and appended the 2nd table
+# Changed name of column to avoid having the
+# term scientific in two columns
 df.columns = df_cols
 df_raw_2.columns = df_cols
 df = df.append(df_raw_2, ignore_index=True)
@@ -261,7 +265,6 @@ __There are 109 rows, however, several of the features have less than 109 rows. 
 
 
 ```python
-print('Count of null values')
 df.isnull().sum()
 ```
 
@@ -289,7 +292,6 @@ __A detailed breakdown of the categorical feature values.__
 
 
 ```python
-print('Count of unique values')
 df.nunique()
 ```
 
@@ -504,20 +506,22 @@ set_bloom(99, 5, 9)
 #source https://ucjeps.berkeley.edu/eflora/eflora_display.php?tid=47100
 set_bloom(100, 5, 8)
 
-# to validate the missing monofloral honey data, I queried a search engine for the common name + honey + north america
-# honeysuckle honey is produced in italy and the other varieties produced zero results, all were marked as False
+# to validate the missing monofloral honey data, I queried 
+# a search engine for the common name + honey + north america 
 df['monofloral_honey'].fillna('no', inplace=True)
 
 df['availability'].fillna('wild', inplace=True)
 
-#the 2 rows with missing source values appear to both be minor after looking them up in a search engine
+# The 2 rows with missing source values appear to both 
+# be minor after looking them up in a search engine
 df['source'].fillna('minor', inplace=True)
 
 #make all string datatypes lowercase
 df = df.applymap(lambda s:s.lower() if type(s) == str else s)
 
 df.loc[(df['plant_type'] == 't'), ('plant_type')] = 'tree'
-df.loc[(df['plant_type'] == 'g, h'), ('plant_type')] = 'tree' #data entry errror, plantain tree were entered in the wiki as grass/herb
+#plantain is tree but was entered in the wiki as grass/herb
+df.loc[(df['plant_type'] == 'g, h'), ('plant_type')] = 'tree' 
 df.loc[(df['plant_type'] == 's'), ('plant_type')] = 'shrub'
 df.loc[(df['plant_type'] == 's, t'), ('plant_type')] = 'shrub'
 df.loc[(df['plant_type'] == 'c'), ('plant_type')] = 'crop'
@@ -528,8 +532,9 @@ df.loc[(df['plant_type'] == 'f'), ('plant_type')] = 'flower'
 citation_pattern = r"[\[\d\]]"
 df.replace(citation_pattern,'',regex=True, inplace=True)
 
-#removed multiple entries/long descriptions preceded by a comma or semicolon
-#also included a few residual patterns of unneeded data that were discovered 
+#removed multiple entries/long descriptions preceded by a 
+# comma or semicolon also included a few residual patterns 
+# of unneeded data that were discovered 
 comma_pattern = r',.+|;.+|echium vulgare is most widely known|and\s.+|\(.+\)'
 df.replace(comma_pattern,'',regex=True, inplace=True)
 list(df['scientific_name'])
@@ -566,7 +571,6 @@ df.loc[(df['source'] != 'minor') & (df['source'] != 'major'),'source'] = 'major'
 
 
 ```python
-print('Count of null values')
 df.isnull().sum()
 ```
 
@@ -591,7 +595,6 @@ df.isnull().sum()
 
 
 ```python
-print('Count of unique values')
 df.nunique()
 ```
 
@@ -806,7 +809,8 @@ The bar charts of each categorical feature give a better sense of the distributi
 
 ```python
 def cat_charts(hue_value):
-    cat_chart_vars = ['plant_type', 'life_cycle', 'monofloral_honey', 'availability', 'source']
+    cat_chart_vars = ['plant_type', 'life_cycle', 'monofloral_honey', 
+                      'availability', 'source']
     fig,axes=plt.subplots(1,5,figsize=(25, 6))
     sns.despine()
     
@@ -903,7 +907,9 @@ There are plants that start to bloom in April and end in September, providing a 
 
 ```python
 months_numbers = [1,2,3,4,5.0,6,7,8,9,10,11,12]
-months_verbose = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+months_verbose = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 
+                  'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 
+                  'Nov', 'Dec']
 fig,axes=plt.subplots(1,3, figsize=(16, 8))
 sns.despine()
 ax0 = sns.countplot(y='begin_bloom_month', 
